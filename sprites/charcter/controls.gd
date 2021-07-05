@@ -64,7 +64,7 @@ func _physics_process(delta):
 	move_and_slide(motion, UP)
 	
 	if (Input.is_action_just_pressed("ui_accept")):
-		reloadStart = false
+		reloadStat = false
 		pass
 
 func _on_Area2D_body_entered(body):
