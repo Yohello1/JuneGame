@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 var BALL_SCENE = preload("res://sprites/charcter/attacks/spell.tscn")
+var speed = Vector2(200, 0)
 
 
 func _ready():
@@ -13,32 +14,18 @@ func _ready():
 
 
 func _on_Timer_timeout():
-	print("Will now shoot")
 	var fireball = BALL_SCENE.instance()
 	self.add_child(fireball)
-	var position = self.global_position
+	var position = Vector2(-3,-9)
+	fireball.set_linear_velocity(speed)
+	fireball.position = position
 	
-#	fireball.position = position
-
-	print(position)
-	print(fireball.global_position)
-
+	var fireball2 = BALL_SCENE.instance()
+	self.add_child(fireball2)
+	var position2 = Vector2(3,-9)
+	fireball2.set_linear_velocity(-speed)
+	fireball2.position = position
 	
-	#global_position
-	
-#	fireball.global_position = thing.global_position 
-
-#	var test = fireball.global_position()
-#				if lookdir == 1:
-#				spell.set_linear_velocity(-speed)
-#			else:
-#				spell.set_linear_velocity(speed)
-#
-#			free += 1
-#			var ta = Timer.new()
-#			ta.set_wait_time(1)
-#			ta.set_one_shot(true)
-#			self.add_child(ta)
-#			ta.start()
-#			yield(ta, "timeout")
-#			spell.queue_free()
+	yield(get_tree().create_timer(1), "timeout")
+	fireball.queue_free()
+	fireball2.queue_free()

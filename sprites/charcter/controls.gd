@@ -1,10 +1,7 @@
 extends KinematicBody2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-onready var sprite = get_node("Sprite")
+onready var sprite = get_node("AnimatedSprite")
+onready var sprite_animated = $AnimatedSprite
 var motion = Vector2()
 var UP = Vector2(0,-1)
 var jump = 0
@@ -12,12 +9,13 @@ var health = int(1000)
 var die = preload("res://general/die.tscn")
 const simple_shoot = preload("res://sprites/enemies/attacks/simple_shoot.tscn")
 onready var timer = get_node("shoot_reload")
+#onready var sprite = $AnimatedSprie
 var reloadStat = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("HELLO THER")
-	$Sprite/Camera2D/HealthBar.value = health
+	$AnimatedSprite/Camera2D/HealthBar.value = health
 	timer.set_wait_time(2)
 	timer.start()
 
@@ -35,9 +33,14 @@ func _physics_process(delta):
 	if Input.is_key_pressed(KEY_A):
 		motion.x = -400
 		sprite.flip_h = true
+		sprite.animation = "default"
+		print("Should be walking now????")
+#		print(sprite_animated.get_current_animation())
+		
 	elif Input.is_key_pressed(KEY_D):
 		motion.x = 400
 		sprite.flip_h = false
+		sprite.play("default")
 		
 	#Jump stuff, don't touch idk how I got double jumping to work
 	if (Input.is_key_pressed(KEY_W)):
@@ -50,19 +53,24 @@ func _physics_process(delta):
 	else:
 		if motion.x < 0:
 			motion.x += 40
+			sprite.play("idle")
 		elif motion.x > 0:
 			motion.x -= 40
+			sprite.play("idle")
 		else:
 			motion.x = 0
+			sprite.play("idle")
 	if health < 1000:
 		health += 1
 		var bar_health = int(health/100)
-		$Sprite/Camera2D/HealthBar.value = health
+		$AnimatedSprite/Camera2D/HealthBar.value = health
 	if health <= 0:
 		print("died")
 		die()
 	move_and_slide(motion, UP)
-	
+#	var collision = move_and_collide(motion)
+#	if collision:
+#		print(collision.collider)
 	if (Input.is_action_just_pressed("ui_accept")):
 		reloadStat = false
 		pass
