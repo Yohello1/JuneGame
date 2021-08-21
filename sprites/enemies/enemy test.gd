@@ -17,9 +17,21 @@ func _on_Timer_timeout():
 	var fireball = BALL_SCENE.instance()
 	self.add_child(fireball)
 	var position = Vector2(-3,-9)
+	fireball.set_linear_velocity(-speed)
+	fireball.position = position
+	print("1st one?")
+	yield(get_tree().create_timer(1), "timeout")
+	fireball.queue_free()
+
+
+
+func _on_Shoot_timeout():
+	var fireball = BALL_SCENE.instance()
+	self.add_child(fireball)
+	var position = Vector2(-3,-9)
 	fireball.set_linear_velocity(speed)
 	fireball.position = position
-	
+
 	var fireball2 = BALL_SCENE.instance()
 	self.add_child(fireball2)
 	var position2 = Vector2(3,-9)
