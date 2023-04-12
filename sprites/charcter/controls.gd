@@ -53,10 +53,10 @@ func _physics_process(delta):
 	else:
 		if motion.x < 0:
 			motion.x += 40
-			sprite.play("idle")
+			sprite.play("default")
 		elif motion.x > 0:
 			motion.x -= 40
-			sprite.play("idle")
+			sprite.play("default")
 		else:
 			motion.x = 0
 			sprite.play("idle")
@@ -68,9 +68,6 @@ func _physics_process(delta):
 		print("died")
 		die()
 	move_and_slide(motion, UP)
-#	var collision = move_and_collide(motion)
-#	if collision:
-#		print(collision.collider)
 	if (Input.is_action_just_pressed("ui_accept")):
 		reloadStat = false
 		pass
@@ -82,6 +79,9 @@ func die():
 	var image = get_viewport().get_texture().get_data()
 	image.flip_y()
 	image.save_png("general/test.png")
+	timer.connect("timeout", self, "queue_free")
+	timer.set_wait_time(1)
+	timer.start()
 	get_tree().change_scene("res://general/die.tscn")
 
 
