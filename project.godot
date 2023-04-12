@@ -6,16 +6,16 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=5
+config_version=4
 
 [application]
 
 config/name="JuneGame"
 run/main_scene="res://general/titles/title.tscn"
 config/use_custom_user_dir=true
-config/features=PackedStringArray("4.0")
 boot_splash/use_filter=false
 config/icon="res://icon.png"
+config/features=PoolStringArray( "4.0" )
 
 [display]
 
@@ -52,6 +52,6 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
 threads/thread_model=2
 environment/default_environment="res://default_env.tres"
+renderer/rendering_method="gl_compatibility"
